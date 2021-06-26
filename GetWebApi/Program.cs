@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -10,19 +11,15 @@ namespace GetWebApi
 {
     internal class Program
     {
-        private static readonly string url="http://localhost:5000/api/Employees" ;
+        //private static readonly string url="http://localhost:5000/api/Employees" ;
         private static readonly string url2= "http://localhost:5000/api/Numbers/";
-        private static readonly string url3= "http://localhost:5000/api/FooBarQix/";
+        
 
-        private static void Main(string[] args)
+        private  static void Main(string[] args)
         {
             //Run(url);
             Console.WriteLine("以Http Get 的方式呼叫API");
             Console.WriteLine("請輸入任意數字");
-            
-            //string input = Console.ReadLine();
-            //string urlParams = url2 + input;
-            //Run(urlParams);
             InputNumber();
             Console.ReadKey();
         }
@@ -42,8 +39,13 @@ namespace GetWebApi
                     response.EnsureSuccessStatusCode();
                     var responseBody = await response.Content.ReadAsStringAsync();
                     var resultObj = JsonConvert.DeserializeObject<NumberObj>(responseBody);
-                    if (resultObj != null) 
+                    if (resultObj != null)
+                    {
                         Console.WriteLine(resultObj.Result);
+                        
+                    }
+                        
+                        
                 }
                 catch(HttpRequestException e)
                 {
@@ -90,10 +92,19 @@ namespace GetWebApi
                 try
                 {
                     
-                    Int32.Parse(input);
-                    //string urlParams = url2 + input;
-                    string urlParams = url3 + input;
-                    RunNumber(urlParams);
+                    var num=Int32.Parse(input);
+                    
+                    for (int i = 0; i <= num; i++)
+                    {
+                        string urlParams = url2 + i.ToString();
+                         
+                        RunNumber(urlParams);
+                        Thread.Sleep(1000);
+                        
+                    }
+                    
+                    
+                   
                 }
                 catch
                 {

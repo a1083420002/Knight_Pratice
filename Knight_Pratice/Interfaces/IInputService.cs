@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Knight_Pratice.Interfaces
 {
-    public interface IDateService
+    public interface IInputService
     {
-        Task<Number.NumberSingleResult> GetResult(int input);//GetData//GetDataWithProvider()
+        Task<int> GetValue(int input);
     }
 }

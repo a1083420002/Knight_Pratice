@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Knight_Pratice", "Knight_Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetWebApi", "GetWebApi\GetWebApi.csproj", "{8BE5BEE1-8E50-4901-92BC-EA01B907AD91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knight_Pratice_Tests", "Knight_Pratice_Tests\Knight_Pratice_Tests.csproj", "{21F839C5-C764-4272-BFCC-6FE438C7F4B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Knight_Pratice_Tests", "Knight_Pratice_Tests\Knight_Pratice_Tests.csproj", "{21F839C5-C764-4272-BFCC-6FE438C7F4B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryCache_Pratice", "MemoryCache_Pratice\MemoryCache_Pratice.csproj", "{9130A677-8553-4CFB-84E3-F0367994E349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms_MemoryCache", "WinForms_MemoryCache\WinForms_MemoryCache.csproj", "{09F28F12-8D2C-4690-8354-79F0674D8542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinForms_MemoryCache", "WinForms_MemoryCache\WinForms_MemoryCache.csproj", "{09F28F12-8D2C-4690-8354-79F0674D8542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

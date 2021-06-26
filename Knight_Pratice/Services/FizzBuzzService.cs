@@ -14,29 +14,29 @@ namespace Knight_Pratice.Services
         //{
         //    _numberService = numberService;
         //}
-        public Task<Number.NumberSingleResult> GetNumber(int num)
+        public Task<Number.NumberSingleResult> GetResult(int input)
         {
             return Task.Run(() =>
             {
                 Number.NumberSingleResult result = new Number.NumberSingleResult();
-                result.Number = num;
+                result.Number = input;
                 string output = "";
 
-                if (num % 3 == 0)
+                if (input % 3 == 0)
                 {
                     output += "Fizz";
                     result.Result = output;
                 }
 
-                if (num % 5 == 0)
+                if (input % 5 == 0)
                 {
                     output += "Bizz";
                     result.Result = output;
                 }
 
-                if (num % 3 != 0 && num % 5 != 0)
+                if (input % 3 != 0 && input % 5 != 0)
                 {
-                    result.Result = num.ToString();
+                    result.Result = input.ToString();
                 }
                 return result;
             });

@@ -9,54 +9,62 @@ namespace Knight_Pratice.Services
 {
     public class FooBarQixService : IDateService
     {
-        public Task<Number.NumberSingleResult> GetNumber(int num)
+        public Task<Number.NumberSingleResult> GetResult(int input)
         {
             return Task.Run(() =>
             {
-                var result = new Number.NumberSingleResult
-                {
-                    Number = num
-                };
-                string numStr = num.ToString();
-                string output = "";
-
-                if (num % 3 == 0)
-                {
-                    output += "Foo";
-                    
-                }
-                if (num % 5 == 0)
-                {
-                    output += "Bar";
-                    
-                }
-                if (num % 7 == 0)
-                {
-                    output += "Qix";
-                   
-                }
-
-
-                foreach (var numChar in numStr)
-                {
-                    switch (numChar)
+               
+                    var result = new Number.NumberSingleResult
                     {
-                        case '3':
-                            output += "Foo";
-                            break;
-                        case '5':
-                            output += "Bar";
-                            break;
-                        case '7':
-                            output += "Qix";
-                            break;
+                        Number = input
+                    };
+                    string numStr = input.ToString();
+                    string output = "";
+
+                    if (input == 0)
+                    {
+                        result.Result = "0";
+                        return result;
+                    }
+                    if (input % 3 == 0)
+                    {
+                        output += "Foo";
+
+                    }
+                    if (input % 5 == 0)
+                    {
+                        output += "Bar";
+
+                    }
+                    if (input % 7 == 0)
+                    {
+                        output += "Qix";
+
                     }
 
-                }
-                result.Result = output == "" ? numStr : output;
-                
 
-                return result;
+                    foreach (var numChar in numStr)
+                    {
+                        switch (numChar)
+                        {
+                            case '3':
+                                output += "Foo";
+                                break;
+                            case '5':
+                                output += "Bar";
+                                break;
+                            case '7':
+                                output += "Qix";
+                                break;
+                        }
+
+                    }
+                    result.Result = output == "" ? numStr : output;
+
+
+                    return result;
+                
+              
             });
         }
     }

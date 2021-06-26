@@ -23,15 +23,15 @@ namespace Knight_Pratice.ApiControllers
             _dateService = dateService;
             _logger = logger;
         }
-        [HttpGet("{num}")]
-        public async Task<Number.NumberSingleResult> GetNumber(int num)
+        [HttpGet("{input:int}")]
+        public async Task<Number.NumberSingleResult> GetNumber(int input)
         {
             StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
-            inform.Append($"NumbersController的GetNumber方法被呼叫，傳入參數為{num.ToString()}");
+            inform.Append($"NumbersController的GetNumber方法被呼叫，傳入參數為{input.ToString()}");
 
             _logger.LogWarning(2001, inform.ToString());
 
-            var result = await _dateService.GetNumber(num);
+            var result = await _dateService.GetResult(input);
             return result;
         }
     }

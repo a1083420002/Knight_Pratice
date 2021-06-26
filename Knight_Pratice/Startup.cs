@@ -37,6 +37,7 @@ namespace Knight_Pratice
             });
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IDateService, FooBarQixService>();
+            services.AddTransient<IInputService, InputService>();
             services.AddMemoryCache();
         }
 

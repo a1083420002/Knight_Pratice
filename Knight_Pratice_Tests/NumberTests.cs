@@ -12,26 +12,44 @@ namespace Knight_Pratice_Tests
     public class NumberTests
     {
         
-        private readonly IDateService _dateService;
+        private readonly FizzBuzzService _fizzBuzzService;
+        private readonly FooBarQixService _fooBarQixService;
         private readonly ITestOutputHelper _output;
         public NumberTests( ITestOutputHelper output)
         {
             //_dateService = new FizzBuzzService();
-            _dateService = new FooBarQixService();
-            
+            _fizzBuzzService = new FizzBuzzService();
+            _fooBarQixService = new FooBarQixService();
             _output = output;
         }
         
         [Theory]
-        //[MemberData(nameof(NumberTestData.FizzBuzzTestData), MemberType = typeof(NumberTestData))]
-        [MemberData(nameof(NumberTestData.FooBarQixTestDataList), MemberType = typeof(NumberTestData))]
-        public async void NumberShould(int num, string expected)
+
+        [MemberData(nameof(NumberTestData.FizzBuzzTestData), MemberType = typeof(NumberTestData))]
+        
+        public async void FizzBuzzShould(int num, string expected)
         {
             //// Arrange
             
             
             //// Act
-            var actual = await _dateService.GetNumber(num);
+            var actual = await _fizzBuzzService.GetResult(num);
+            //// Assert
+            Assert.Equal(expected, actual.Result);
+
+            _output.WriteLine($"The result is {actual.Result}");
+        }
+
+        [Theory]
+        
+        [MemberData(nameof(NumberTestData.FooBarQixTestDataList), MemberType = typeof(NumberTestData))]
+        public async void FooBarQixShould(int num, string expected)
+        {
+            //// Arrange
+
+
+            //// Act
+            var actual = await _fooBarQixService.GetResult(num);
             //// Assert
             Assert.Equal(expected, actual.Result);
 
