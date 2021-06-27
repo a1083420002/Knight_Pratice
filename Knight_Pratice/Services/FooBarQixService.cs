@@ -9,34 +9,42 @@ namespace Knight_Pratice.Services
 {
     public class FooBarQixService : IDateService
     {
+        private readonly IInputService _inputService;
+
+        public FooBarQixService(IInputService inputService)
+        {
+            _inputService = inputService;
+        }
+
         public Task<Number.NumberSingleResult> GetResult(int input)
         {
             return Task.Run(() =>
             {
-               
+
+                    int value = _inputService.GetValue(input);
                     var result = new Number.NumberSingleResult
                     {
-                        Number = input
+                        Number = value
                     };
-                    string numStr = input.ToString();
+                    string numStr = value.ToString();
                     string output = "";
 
-                    if (input == 0)
+                    if (value == 0)
                     {
                         result.Result = "0";
                         return result;
                     }
-                    if (input % 3 == 0)
+                    if (value % 3 == 0)
                     {
                         output += "Foo";
 
                     }
-                    if (input % 5 == 0)
+                    if (value % 5 == 0)
                     {
                         output += "Bar";
 
                     }
-                    if (input % 7 == 0)
+                    if (value % 7 == 0)
                     {
                         output += "Qix";
 

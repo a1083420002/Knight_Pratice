@@ -93,18 +93,21 @@ namespace GetWebApi
                 {
                     
                     var num=Int32.Parse(input);
-                    
-                    for (int i = 0; i <= num; i++)
-                    {
-                        string urlParams = url2 + i.ToString();
-                         
-                        RunNumber(urlParams);
-                        Thread.Sleep(1000);
-                        
-                    }
-                    
-                    
-                   
+
+                    ////回傳 0 ~ max 整數
+                    //for (int i = 0; i <= num; i++)
+                    //{
+                    //    string urlParams = url2 + i.ToString();
+
+                    //    RunNumber(urlParams);
+                    //    Thread.Sleep(1000);
+
+                    //}
+
+                    string urlParams = url2 + input;
+
+                    RunNumber(urlParams);
+
                 }
                 catch
                 {

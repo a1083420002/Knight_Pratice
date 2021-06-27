@@ -32,6 +32,7 @@ namespace Knight_Pratice.ApiControllers
             _logger.LogWarning(2001, inform.ToString());
 
             var result = await _dateService.GetResult(input);
+
             return result;
         }
     }

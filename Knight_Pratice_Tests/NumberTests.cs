@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Knight_Pratice.Interfaces;
 using Knight_Pratice.Models;
 using Knight_Pratice.Services;
-using Moq;
 using NSubstitute;
 using Xunit;
 using Xunit.Abstractions;
@@ -13,21 +12,22 @@ namespace Knight_Pratice_Tests
     {
         
         private readonly FizzBuzzService _fizzBuzzService;
-        private readonly FooBarQixService _fooBarQixService;
-        private readonly ITestOutputHelper _output;
-        public NumberTests( ITestOutputHelper output)
+        private readonly IDateService _sut;
+        private readonly ITestOutputHelper _testOutput;
+        private readonly IInputService _inputService = Substitute.For<IInputService>();
+        public NumberTests( ITestOutputHelper testOutput)
         {
-            //_dateService = new FizzBuzzService();
+            
             _fizzBuzzService = new FizzBuzzService();
-            _fooBarQixService = new FooBarQixService();
-            _output = output;
+            _testOutput = testOutput;
+            _sut = new FooBarQixService(_inputService);
         }
         
         [Theory]
 
         [MemberData(nameof(NumberTestData.FizzBuzzTestData), MemberType = typeof(NumberTestData))]
         
-        public async void FizzBuzzShould(int num, string expected)
+        public async Task FizzBuzzShould(int num, string expected)
         {
             //// Arrange
             
@@ -37,23 +37,24 @@ namespace Knight_Pratice_Tests
             //// Assert
             Assert.Equal(expected, actual.Result);
 
-            _output.WriteLine($"The result is {actual.Result}");
+            _testOutput.WriteLine($"The result is {actual.Result}");
         }
 
         [Theory]
-        
+
         [MemberData(nameof(NumberTestData.FooBarQixTestDataList), MemberType = typeof(NumberTestData))]
-        public async void FooBarQixShould(int num, string expected)
+        
+        public async Task FooBarQixShould(int num, string expected)
         {
             //// Arrange
-
-
+            _inputService.GetValue(num).Returns(num);
             //// Act
-            var actual = await _fooBarQixService.GetResult(num);
+            var actual = await _sut.GetResult(num);
             //// Assert
             Assert.Equal(expected, actual.Result);
 
-            _output.WriteLine($"The result is {actual.Result}");
+
+            _testOutput.WriteLine($"The result is {actual.Result}");
         }
     }
 }

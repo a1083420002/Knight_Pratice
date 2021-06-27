@@ -9,7 +9,7 @@ namespace Knight_Pratice_Tests
 {
     public class NumberTestData
     {
-        public static List<object[]> FizzBuzzTestData { get; } = new List<object[]>
+        public static IEnumerable<object[]> FizzBuzzTestData { get; } = new List<object[]>
         {
             new object[]{ 3, "Fizz"},
             new object[]{ 5, "Bizz"},
@@ -18,7 +18,7 @@ namespace Knight_Pratice_Tests
             new object[]{1, "1"},
         };
 
-        public static List<object[]> FooBarQixTestDataList { get; } = new List<object[]>
+        public static IEnumerable<object[]> FooBarQixTestDataList { get; } = new List<object[]>
         {
             new object[] {1, "1"},
             new object[] {3, "FooFoo"},

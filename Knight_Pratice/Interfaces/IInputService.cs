@@ -8,6 +8,6 @@ namespace Knight_Pratice.Interfaces
 {
     public interface IInputService
     {
-        Task<int> GetValue(int input);
+        int GetValue(int input);
     }
 }
