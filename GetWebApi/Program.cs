@@ -27,7 +27,7 @@ namespace GetWebApi
         /// 非同步的方式呼叫Controller API
         /// </summary>
         /// <param name="url">NumberController API Url</param>
-        private static async void RunNumber(string url)
+        private static async Task RunNumber(string url)
         {
             
             using (HttpClient client=new HttpClient())
@@ -83,7 +83,7 @@ namespace GetWebApi
         /// <summary>
         /// 輸入某一數字，先判斷是否為數字，再呼叫API
         /// </summary>
-        private static void InputNumber()
+        private async static Task InputNumber()
         {
             while(true)
             {
@@ -94,19 +94,19 @@ namespace GetWebApi
                     
                     var num=Int32.Parse(input);
 
-                    ////回傳 0 ~ max 整數
+                    //回傳 0 ~ max 整數
                     //for (int i = 0; i <= num; i++)
                     //{
                     //    string urlParams = url2 + i.ToString();
 
-                    //    RunNumber(urlParams);
+                    //    await RunNumber(urlParams);
                     //    Thread.Sleep(1000);
 
                     //}
 
                     string urlParams = url2 + input;
 
-                    RunNumber(urlParams);
+                    await RunNumber(urlParams);
 
                 }
                 catch
