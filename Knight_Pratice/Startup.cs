@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
 using Knight_Pratice.Controllers;
+using Knight_Pratice.Dependency;
 using Knight_Pratice.Interfaces;
 using Knight_Pratice.Services;
 using Microsoft.AspNetCore.Builder;
@@ -31,14 +36,24 @@ namespace Knight_Pratice
         {
 
             services.AddControllers();
+            services.AddOptions();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Knight_Pratice", Version = "v1" });
             });
-            services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient<IDateService, FooBarQixService>();
-            services.AddTransient<IInputService, InputService>();
+            
+            
             services.AddMemoryCache();
+            
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            //builder.RegisterType<FooBarQixService>().As<IDateService>().SingleInstance();
+            //builder.RegisterType<InputService>().As<IInputService>();
+            //builder.RegisterType<EmployeeService>().As<IEmployeeService>();
+            builder.RegisterModule<DependencyRegister>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,5 +77,7 @@ namespace Knight_Pratice
                 endpoints.MapControllers();
             });
         }
+
+       
     }
 }
