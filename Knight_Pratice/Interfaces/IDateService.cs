@@ -8,6 +8,10 @@ namespace Knight_Pratice.Interfaces
 {
     public interface IDateService
     {
-        Task<Number.NumberSingleResult> GetResult(int input);//GetData//GetDataWithProvider()
+        Task<Number.NumberSingleResult> GetResultAsync(int input);//GetData//GetDataWithProvider()
+
+        public Number.NumberSingleResult GetResult(int input);
+
+        public Number.NumberSingleResult GetRandom();
     }
 }

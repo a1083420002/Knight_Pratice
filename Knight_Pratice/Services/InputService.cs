@@ -15,5 +15,12 @@ namespace Knight_Pratice.Services
             int result = random.Next(input + 1);
             return result;
         }
+
+        public int GetValue()
+        {
+            Random random = new Random();
+            int result = random.Next(100 + 1);
+            return result;
+        }
     }
 }

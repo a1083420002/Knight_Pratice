@@ -17,11 +17,12 @@ namespace Knight_Pratice.ApiControllers
     {
         private readonly IDateService _dateService;
         private readonly ILogger<NumbersController> _logger;
-
-        public NumbersController(IDateService dateService, ILogger<NumbersController> logger)
+        private readonly ICacheService _cacheService;
+        public NumbersController(IDateService dateService, ILogger<NumbersController> logger, ICacheService cacheService)
         {
             _dateService = dateService;
             _logger = logger;
+            _cacheService = cacheService;
         }
         [HttpGet("{input:int}")]
         public async Task<Number.NumberSingleResult> GetNumber(int input)
@@ -31,7 +32,34 @@ namespace Knight_Pratice.ApiControllers
 
             _logger.LogWarning(2001, inform.ToString());
 
-            var result = await _dateService.GetResult(input);
+            var result = await _dateService.GetResultAsync(input);
+
+            return result;
+        }
+        [Route("api/[controller]/InsertData")]
+        [HttpGet]
+        public Number.NumberSingleResult InsertData()
+        {
+            StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
+            inform.Append($"NumbersController的InsertData方法被呼叫");
+
+            _logger.LogWarning(2001, inform.ToString());
+
+            var result = _cacheService.InsertData();
+
+            return result;
+        }
+
+        [Route("api/[controller]/GetData")]
+        [HttpGet]
+        public Number.NumberSingleResult GetData()
+        {
+            StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
+            inform.Append($"NumbersController的GetData方法被呼叫");
+
+            _logger.LogWarning(2001, inform.ToString());
+
+            var result = _cacheService.GetData();
 
             return result;
         }

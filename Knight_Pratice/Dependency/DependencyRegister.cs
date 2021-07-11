@@ -22,6 +22,7 @@ namespace Knight_Pratice.Dependency
             containerBuilder.RegisterType<FooBarQixService>().As<IDateService>().SingleInstance();
             containerBuilder.RegisterType<InputService>().As<IInputService>();
             containerBuilder.RegisterType<EmployeeService>().As<IEmployeeService>();
+            containerBuilder.RegisterType<CacheService>().As<ICacheService>();
 
         }
     }

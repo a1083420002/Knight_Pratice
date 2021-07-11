@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Knight_Pratice.Interfaces;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Knight_Pratice.Models
 {
-    public class CacheHelper
+    public class CacheHelper 
     {
         private static List<Number.NumberSingleResult> dataList = new List<Number.NumberSingleResult>();
 
@@ -16,7 +18,7 @@ namespace Knight_Pratice.Models
 
         private static readonly string SEP_STR = "---";
 
-        public static IMemoryCache _memoryCache = new MemoryCache(new MemoryCacheOptions());
+       
 
         static CacheHelper()
         {
@@ -44,7 +46,7 @@ namespace Knight_Pratice.Models
             }
         }
 
-        public static void AddNumber(Number.NumberSingleResult num)
+        public static Number.NumberSingleResult AddNumber(Number.NumberSingleResult num)
         {
             lock (dataList)
             {
@@ -59,6 +61,8 @@ namespace Knight_Pratice.Models
                     item.Result = num.Result;
                 }
                 WriteFile();
+
+                return num;
             }
         }
 
@@ -83,9 +87,39 @@ namespace Knight_Pratice.Models
             StringBuilder content = new StringBuilder();
             foreach (var item in dataList)
             {
-                content.AppendLine(item.Number + SEP_STR + item.Number );
+                content.Append(item.Number + SEP_STR + item.Result);
+                DateTime cacheTimeExpire = DateTime.Now.AddSeconds(5);
+                File.WriteAllText(cachePath, content.ToString() + SEP_STR + cacheTimeExpire + SEP_STR, Encoding.UTF8);
+                content.Clear();
             }
-            File.WriteAllText(cachePath, content.ToString(), Encoding.UTF8);
+            
+            
+        }
+
+        public static string[] ReadFile(Number.NumberSingleResult newRandom)
+        {
+            var content = File.ReadAllText(cachePath, Encoding.UTF8);
+
+            var result = content.Split(SEP_STR);
+            var expireTime = Convert.ToDateTime(result[2]);
+            var timeDiff = CacheHelper.CalculateTime(expireTime);
+            if (timeDiff.Seconds >= 5)
+            {
+               
+                AddNumber(newRandom);
+            }
+
+
+            return result;
+        }
+
+        public static TimeSpan CalculateTime(DateTime cacheTimeExpire)
+        {
+            DateTime now=DateTime.Now;
+            TimeSpan tsNow = new TimeSpan(now.Ticks);
+            TimeSpan tsExpire = new TimeSpan(cacheTimeExpire.Ticks);
+            TimeSpan ts = tsNow.Subtract(tsExpire).Duration();
+            return ts;
         }
     }
 }

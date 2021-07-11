@@ -18,7 +18,7 @@ namespace Knight_Pratice_Tests
         public NumberTests( ITestOutputHelper testOutput)
         {
             
-            _fizzBuzzService = new FizzBuzzService();
+            _fizzBuzzService = new FizzBuzzService(_inputService);
             _testOutput = testOutput;
             _sut = new FooBarQixService(_inputService);
         }
@@ -33,7 +33,7 @@ namespace Knight_Pratice_Tests
             
             
             //// Act
-            var actual = await _fizzBuzzService.GetResult(num);
+            var actual = await _fizzBuzzService.GetResultAsync(num);
             //// Assert
             Assert.Equal(expected, actual.Result);
 
@@ -49,7 +49,7 @@ namespace Knight_Pratice_Tests
             //// Arrange
             _inputService.GetValue(num).Returns(num);
             //// Act
-            var actual = await _sut.GetResult(num);
+            var actual = await _sut.GetResultAsync(num);
             //// Assert
             Assert.Equal(expected, actual.Result);
 

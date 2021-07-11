@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Knight_Pratice.Controllers;
+using Knight_Pratice.Interfaces;
 using Knight_Pratice.Models;
 using Knight_Pratice.Services;
 using Microsoft.Extensions.Caching.Memory;
@@ -16,10 +17,12 @@ namespace Knight_Pratice.ApiControllers
     public class CacheController : ControllerBase
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ICacheService _cacheService;
 
-        public CacheController(IMemoryCache memoryCache)
+        public CacheController(IMemoryCache memoryCache, ICacheService cacheService)
         {
             _memoryCache = memoryCache;
+            _cacheService = cacheService;
         }
         [HttpGet("{key}")]
         public Employee.EmployeeSingleResult Cache(string key)
@@ -35,17 +38,8 @@ namespace Knight_Pratice.ApiControllers
         [HttpGet]
         public Number.NumberSingleResult GetFileCache()
         {
-            var numSingleResult = new Number.NumberSingleResult
-            {
-                Number = 1,
-                Result = "1"
-            };
-            var list = CacheHelper.GetAll();
-           
+            var result = _cacheService.InsertData();
 
-            CacheHelper.AddNumber(numSingleResult);
-
-            var result = CacheHelper.GetInfo(1);
 
             return result;
         }

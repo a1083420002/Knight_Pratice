@@ -9,5 +9,7 @@ namespace Knight_Pratice.Interfaces
     public interface IInputService
     {
         int GetValue(int input);
+
+        int GetValue();
     }
 }
