@@ -59,7 +59,7 @@ namespace Knight_Pratice.ApiControllers
 
             _logger.LogWarning(2001, inform.ToString());
 
-            var result = _dateService.GetResult();
+            var result = _cacheService.GetData();
 
             return result;
         }
