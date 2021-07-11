@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Knight_Pratice.Controllers;
+using Knight_Pratice.Models;
+using Knight_Pratice.Services;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Knight_Pratice.ApiControllers
@@ -28,6 +30,24 @@ namespace Knight_Pratice.ApiControllers
             
 
             
+        }
+
+        [HttpGet]
+        public Number.NumberSingleResult GetFileCache()
+        {
+            var numSingleResult = new Number.NumberSingleResult
+            {
+                Number = 1,
+                Result = "1"
+            };
+            var list = CacheHelper.GetAll();
+           
+
+            CacheHelper.AddNumber(numSingleResult);
+
+            var result = CacheHelper.GetInfo(1);
+
+            return result;
         }
 
     }
