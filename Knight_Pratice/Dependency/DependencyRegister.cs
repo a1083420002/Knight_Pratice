@@ -17,17 +17,7 @@ namespace Knight_Pratice.Dependency
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            //var assembly = this.GetType().GetTypeInfo().Assembly;
-            //var builder = new ContainerBuilder();
-            //var manager = new ApplicationPartManager();
-            //manager.ApplicationParts.Add(new AssemblyPart(assembly));
-            //manager.FeatureProviders.Add(new ControllerFeatureProvider());
-            //var feature = new ControllerFeature();
-            //manager.PopulateFeature(feature);
-            //builder.RegisterType<ApplicationPartManager>().AsSelf().SingleInstance();
-            //builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray()).PropertiesAutowired();
-            //containerBuilder.RegisterType<NumbersController>().PropertiesAutowired();
-
+           
            
             containerBuilder.RegisterType<FooBarQixService>().As<IDateService>().SingleInstance();
             containerBuilder.RegisterType<InputService>().As<IInputService>();
