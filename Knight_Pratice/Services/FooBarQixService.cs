@@ -194,7 +194,7 @@ namespace Knight_Pratice.Services
 
         }
 
-        public Number.NumberSingleResult GetData()
+        public Number.NumberSingleResult GetResult()
         {
             var newRandom = GetRandom();
             var stringArr = CacheHelper.ReadFile(newRandom);

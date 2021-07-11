@@ -99,5 +99,14 @@ namespace Knight_Pratice.Services
                 return result;
             });
         }
+
+        public Number.NumberSingleResult GetResult()
+        {
+            var result = new Number.NumberSingleResult
+            {
+                Number = 1,Result = "1"
+            };
+            return result;
+        }
     }
 }

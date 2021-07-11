@@ -11,6 +11,7 @@ namespace Knight_Pratice.Interfaces
         Task<Number.NumberSingleResult> GetResultAsync(int input);//GetData//GetDataWithProvider()
 
         public Number.NumberSingleResult GetResult(int input);
+        public Number.NumberSingleResult GetResult();
 
         public Number.NumberSingleResult GetRandom();
     }
