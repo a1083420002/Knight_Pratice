@@ -11,11 +11,12 @@ namespace Knight_Pratice.Services
     public class FooBarQixService : IDateService
     {
         private readonly IInputService _inputService;
+        private readonly ICacheService _cacheService;
 
-
-        public FooBarQixService(IInputService inputService)
+        public FooBarQixService(IInputService inputService, ICacheService cacheService)
         {
             _inputService = inputService;
+            _cacheService = cacheService;
         }
 
         public Task<Number.NumberSingleResult> GetResultAsync(int input)
@@ -200,15 +201,19 @@ namespace Knight_Pratice.Services
         {
             
             var key = "key";
-            var result = GetRandom();
+           
 
-            //var result = _cacheService.GetData<Number.NumberSingleResult>(key);
+            var result = _cacheService.GetData<Number.NumberSingleResult>(key);
 
-            //if (result == null)
-            //{
-               
-            //    result = _cacheService.InsertData();
-            //}
+            if (result == null)
+            {
+                var random = GetRandom();
+
+                var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
+                _cacheService.InsertData<Number.NumberSingleResult>(key, random, options);
+
+                result = random;
+            }
 
 
             return result;

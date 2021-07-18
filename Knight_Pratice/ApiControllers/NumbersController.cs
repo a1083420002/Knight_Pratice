@@ -60,18 +60,8 @@ namespace Knight_Pratice.ApiControllers
             inform.Append($"NumbersController的GetData方法被呼叫");
 
             _logger.LogWarning(2001, inform.ToString());
-            var key = "key";
-            var result = _cacheService.GetData<Number.NumberSingleResult>(key);
-
-            if (result == null)
-            {
-                var random = _dateService.GetRandom();
-                
-                var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
-                _cacheService.InsertData<Number.NumberSingleResult>(key, random, options);
-
-                result = random;
-            }
+            
+            var result = _dateService.GetResult();
 
             
 
