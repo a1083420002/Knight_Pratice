@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Knight_Pratice.Services
 {
     public class FooBarQixService : IDateService
     {
         private readonly IInputService _inputService;
+
 
         public FooBarQixService(IInputService inputService)
         {
@@ -196,17 +198,22 @@ namespace Knight_Pratice.Services
 
         public Number.NumberSingleResult GetResult()
         {
-            var newRandom = GetRandom();
-            var stringArr = CacheHelper.ReadFile(newRandom);
+            
+            var key = "key";
+            var result = GetRandom();
 
-            var result = new Number.NumberSingleResult
-            {
-                Number = int.Parse(stringArr[0]),
-                Result = stringArr[1]
-            };
+            //var result = _cacheService.GetData<Number.NumberSingleResult>(key);
+
+            //if (result == null)
+            //{
+               
+            //    result = _cacheService.InsertData();
+            //}
 
 
             return result;
         }
+
+         
     }
 }

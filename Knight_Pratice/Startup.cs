@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
+
 namespace Knight_Pratice
 {
     public class Startup
@@ -44,7 +45,12 @@ namespace Knight_Pratice
             
             
             services.AddMemoryCache();
-            
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.InstanceName = "";
+                options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
+            });
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

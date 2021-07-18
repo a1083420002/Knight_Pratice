@@ -7,6 +7,7 @@ using Knight_Pratice.Interfaces;
 using Knight_Pratice.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace Knight_Pratice.ApiControllers
@@ -44,10 +45,11 @@ namespace Knight_Pratice.ApiControllers
             inform.Append($"NumbersController的InsertData方法被呼叫");
 
             _logger.LogWarning(2001, inform.ToString());
-
-            var result = _cacheService.InsertData();
-
-            return result;
+            var random = _dateService.GetRandom();
+            var key = "key";
+            var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
+            _cacheService.InsertData<Number.NumberSingleResult>(key, random, options);
+            return random;
         }
 
         [Route("api/[controller]/GetData")]
@@ -58,10 +60,24 @@ namespace Knight_Pratice.ApiControllers
             inform.Append($"NumbersController的GetData方法被呼叫");
 
             _logger.LogWarning(2001, inform.ToString());
+            var key = "key";
+            var result = _cacheService.GetData<Number.NumberSingleResult>(key);
 
-            var result = _dateService.GetResult();
+            if (result == null)
+            {
+                var random = _dateService.GetRandom();
+                
+                var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
+                _cacheService.InsertData<Number.NumberSingleResult>(key, random, options);
+
+                result = random;
+            }
+
+            
 
             return result;
         }
+
+
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Knight_Pratice.Models
 {
-    public class CacheHelper 
+    public class FileCacheHelper 
     {
         private static List<Number.NumberSingleResult> dataList = new List<Number.NumberSingleResult>();
 
@@ -20,7 +20,7 @@ namespace Knight_Pratice.Models
 
        
 
-        static CacheHelper()
+        static FileCacheHelper()
         {
             string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache");
             if (!Directory.Exists(dir))
@@ -102,7 +102,7 @@ namespace Knight_Pratice.Models
 
             var result = content.Split(SEP_STR);
             var expireTime = Convert.ToDateTime(result[2]);
-            var timeDiff = CacheHelper.CalculateTime(expireTime);
+            var timeDiff = FileCacheHelper.CalculateTime(expireTime);
             if (timeDiff.Seconds >= 5)
             {
                
