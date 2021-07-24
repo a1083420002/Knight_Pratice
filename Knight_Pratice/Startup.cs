@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using Knight_Pratice.Context;
 using Knight_Pratice.Controllers;
 using Knight_Pratice.Dependency;
 using Knight_Pratice.Interfaces;
@@ -14,12 +15,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
 
 namespace Knight_Pratice
 {
@@ -45,11 +46,8 @@ namespace Knight_Pratice
             
             
             services.AddMemoryCache();
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.InstanceName = "";
-                options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
-            });
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
 
         }
 

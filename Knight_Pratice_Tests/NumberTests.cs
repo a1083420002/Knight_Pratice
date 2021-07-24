@@ -15,12 +15,13 @@ namespace Knight_Pratice_Tests
         private readonly IDateService _sut;
         private readonly ITestOutputHelper _testOutput;
         private readonly IInputService _inputService = Substitute.For<IInputService>();
+        private readonly ICacheService _cacheService = Substitute.For<ICacheService>();
         public NumberTests( ITestOutputHelper testOutput)
         {
             
             _fizzBuzzService = new FizzBuzzService(_inputService);
             _testOutput = testOutput;
-            _sut = new FooBarQixService(_inputService);
+            _sut = new FooBarQixService(_inputService, _cacheService);
         }
         
         [Theory]
