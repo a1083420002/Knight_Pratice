@@ -12,10 +12,12 @@ namespace Knight_Pratice.Services
     {
         private readonly IInputService _inputService;
         private readonly ICacheService _cacheService;
+        private readonly IDataRepository _dataRepository;
 
-        public FooBarQixService(IInputService inputService, ICacheService cacheService)
+        public FooBarQixService(IInputService inputService, IDataRepository dataRepository, ICacheService cacheService)
         {
             _inputService = inputService;
+            _dataRepository = dataRepository;
             _cacheService = cacheService;
         }
 
@@ -81,58 +83,65 @@ namespace Knight_Pratice.Services
 
         public Number.NumberSingleResult GetResult(int input)
         {
-            
 
-                int value = _inputService.GetValue(input);
-                var result = new Number.NumberSingleResult
-                {
-                    Number = value
-                };
-                string numStr = value.ToString();
-                string output = "";
+            var querySingleResult = _dataRepository.GetAll<Data>().FirstOrDefault(n=>n.Data_Input==input.ToString());
+            if (querySingleResult != default)
+            {
+                return new Number.NumberSingleResult { Number =Int32.Parse(querySingleResult.Data_Input),Result = querySingleResult.Data_Result};
+            }
 
-                if (value == 0)
-                {
-                    result.Result = "0";
-                    return result;
-                }
-                if (value % 3 == 0)
-                {
-                    output += "Foo";
+            int value = _inputService.GetValue(input);
+            var result = new Number.NumberSingleResult
+            {
+                Number = value
+            };
+            string numStr = value.ToString();
+            string output = "";
 
-                }
-                if (value % 5 == 0)
-                {
-                    output += "Bar";
-
-                }
-                if (value % 7 == 0)
-                {
-                    output += "Qix";
-
-                }
-
-
-                foreach (var numChar in numStr)
-                {
-                    switch (numChar)
-                    {
-                        case '3':
-                            output += "Foo";
-                            break;
-                        case '5':
-                            output += "Bar";
-                            break;
-                        case '7':
-                            output += "Qix";
-                            break;
-                    }
-
-                }
-                result.Result = output == "" ? numStr : output;
-
-
+            if (value == 0)
+            {
+                result.Result = "0";
                 return result;
+            }
+            if (value % 3 == 0)
+            {
+                output += "Foo";
+
+            }
+            if (value % 5 == 0)
+            {
+                output += "Bar";
+
+            }
+            if (value % 7 == 0)
+            {
+                output += "Qix";
+
+            }
+
+
+            foreach (var numChar in numStr)
+            {
+                switch (numChar)
+                {
+                    case '3':
+                        output += "Foo";
+                        break;
+                    case '5':
+                        output += "Bar";
+                        break;
+                    case '7':
+                        output += "Qix";
+                        break;
+                }
+
+            }
+            result.Result = output == "" ? numStr : output;
+                
+            var createData = new Data { Data_Input = result.Number.ToString(),Data_Result = result.Result.ToString()};
+                
+            _dataRepository.Create<Data>(createData);
+            return result;
 
 
            
@@ -201,7 +210,7 @@ namespace Knight_Pratice.Services
         {
             
             var key = "key";
-           
+
 
             var result = _cacheService.GetData<Number.NumberSingleResult>(key);
 
@@ -215,10 +224,15 @@ namespace Knight_Pratice.Services
                 result = random;
             }
 
+            //var result = new Number.NumberSingleResult {Number = 1, Result = "1"};
+
 
             return result;
         }
 
-         
+       
+
+
+
     }
 }

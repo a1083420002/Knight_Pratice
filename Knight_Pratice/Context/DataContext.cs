@@ -22,6 +22,17 @@ namespace Knight_Pratice.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=10.11.210.43;User=sa;Password=Ohmygodslp12;Database=Knight_DataDB");
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Data>().HasData(
+                new Data{Data_Id = 1,Data_Input = "1",Data_Result = "1"},
+                new Data{Data_Id = 2,Data_Input = "2",Data_Result = "2"},
+                new Data{Data_Id = 3,Data_Input = "3",Data_Result = "FooFoo" }
+                
+                );
         }
 
         public virtual  DbSet<Data> Datas { get; set; }

@@ -11,9 +11,8 @@ namespace Knight_Pratice.Services
     {
         public int GetValue(int input)
         {
-            Random random = new Random();
-            int result = random.Next(input + 1);
-            return result;
+            
+            return input;
         }
 
         public int GetValue()

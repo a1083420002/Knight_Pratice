@@ -7,7 +7,6 @@ using Knight_Pratice.Interfaces;
 using Knight_Pratice.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace Knight_Pratice.ApiControllers
@@ -18,12 +17,12 @@ namespace Knight_Pratice.ApiControllers
     {
         private readonly IDateService _dateService;
         private readonly ILogger<NumbersController> _logger;
-        private readonly ICacheService _cacheService;
-        public NumbersController(IDateService dateService, ILogger<NumbersController> logger, ICacheService cacheService)
+        
+        public NumbersController(IDateService dateService, ILogger<NumbersController> logger)
         {
             _dateService = dateService;
             _logger = logger;
-            _cacheService = cacheService;
+            
         }
         [HttpGet("{input:int}")]
         public async Task<Number.NumberSingleResult> GetNumber(int input)
@@ -37,20 +36,19 @@ namespace Knight_Pratice.ApiControllers
 
             return result;
         }
-        [Route("api/[controller]/InsertData")]
-        [HttpGet]
-        public Number.NumberSingleResult InsertData()
-        {
-            StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
-            inform.Append($"NumbersController的InsertData方法被呼叫");
+        //[Route("api/[controller]/InsertData")]
+        //[HttpGet]
+        //public Number.NumberSingleResult InsertData()
+        //{
+        //    StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
+        //    inform.Append($"NumbersController的InsertData方法被呼叫");
 
-            _logger.LogWarning(2001, inform.ToString());
-            var random = _dateService.GetRandom();
-            var key = "key";
-            var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
-            _cacheService.InsertData<Number.NumberSingleResult>(key, random, options);
-            return random;
-        }
+        //    _logger.LogWarning(2001, inform.ToString());
+
+        //    var result = _cacheService.InsertData();
+
+        //    return result;
+        //}
 
         [Route("api/[controller]/GetData")]
         [HttpGet]
@@ -60,14 +58,23 @@ namespace Knight_Pratice.ApiControllers
             inform.Append($"NumbersController的GetData方法被呼叫");
 
             _logger.LogWarning(2001, inform.ToString());
-            
-            var result = _dateService.GetResult();
 
-            
+            var result = _dateService.GetResult();
 
             return result;
         }
+        [Route("api/[controller]/GetDataForDB/{input:int}")]
+        [HttpGet]
+        public Number.NumberSingleResult GetDataForDB(int input)
+        {
+            StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
+            inform.Append($"NumbersController的GetData方法被呼叫");
 
+            _logger.LogWarning(2001, inform.ToString());
 
+            var result = _dateService.GetResult(input);
+
+            return result;
+        }
     }
 }

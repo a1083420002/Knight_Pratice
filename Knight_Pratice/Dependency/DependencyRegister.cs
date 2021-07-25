@@ -6,10 +6,14 @@ using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Autofac;
 using Knight_Pratice.ApiControllers;
+using Knight_Pratice.Context;
 using Knight_Pratice.Interfaces;
+using Knight_Pratice.Repository;
 using Knight_Pratice.Services;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Knight_Pratice.Dependency
 {
@@ -17,12 +21,15 @@ namespace Knight_Pratice.Dependency
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-           
-           
-            containerBuilder.RegisterType<FooBarQixService>().As<IDateService>().SingleInstance();
-            containerBuilder.RegisterType<InputService>().As<IInputService>();
-            containerBuilder.RegisterType<EmployeeService>().As<IEmployeeService>();
-            containerBuilder.RegisterType<RedisCacheService>().As<ICacheService>();
+
+            containerBuilder.RegisterType<RedisCacheService>().As<ICacheService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<FooBarQixService>().As<IDateService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<BaseRepository>().As<IDataRepository>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<InputService>().As<IInputService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<EmployeeService>().As<IEmployeeService>().InstancePerLifetimeScope();
+            
+            
+
 
         }
     }

@@ -46,6 +46,11 @@ namespace Knight_Pratice
             
             
             services.AddMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.InstanceName = "";
+                options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
+            });
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
 
