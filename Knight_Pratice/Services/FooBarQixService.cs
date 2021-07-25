@@ -224,7 +224,7 @@ namespace Knight_Pratice.Services
                 result = random;
             }
 
-            //var result = new Number.NumberSingleResult {Number = 1, Result = "1"};
+            
 
 
             return result;
