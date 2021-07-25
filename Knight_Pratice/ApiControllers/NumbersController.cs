@@ -68,7 +68,7 @@ namespace Knight_Pratice.ApiControllers
         public Number.NumberSingleResult GetDataForDB(int input)
         {
             StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
-            inform.Append($"NumbersController的GetData方法被呼叫");
+            inform.Append($"NumbersController的GetDataForDB方法被呼叫，傳入參數為{input.ToString()}");
 
             _logger.LogWarning(2001, inform.ToString());
 
