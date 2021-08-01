@@ -14,5 +14,7 @@ namespace Knight_Pratice.Interfaces
         public Number.NumberSingleResult GetResult();
 
         public Number.NumberSingleResult GetRandom();
+
+        public DataEntity GetDataEntity(int input);
     }
 }

@@ -76,5 +76,19 @@ namespace Knight_Pratice.ApiControllers
 
             return result;
         }
+        [Route("api/[controller]/GetDataEntity/{input:int}")]
+        [HttpGet]
+        public DataEntity GetDataEntity(int input)
+        {
+            StringBuilder inform = new StringBuilder(DateTime.Now.ToString());
+            inform.Append($"NumbersController的GetDataEntity方法被呼叫");
+
+            _logger.LogWarning(2001, inform.ToString());
+
+            var result = _dateService.GetDataEntity(input);
+
+            return result;
+        }
+
     }
 }

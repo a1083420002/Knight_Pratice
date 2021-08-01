@@ -53,6 +53,7 @@ namespace Knight_Pratice
             });
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
+            
 
         }
 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using Knight_Pratice.Interfaces;
 using Knight_Pratice.Models;
 using Knight_Pratice.Services;
@@ -17,12 +18,13 @@ namespace Knight_Pratice_Tests
         private readonly IInputService _inputService = Substitute.For<IInputService>();
         private readonly ICacheService _cacheService = Substitute.For<ICacheService>();
         private readonly IDataRepository _dataRepository = Substitute.For<IDataRepository>();
+        private readonly IMapper _mapper = Substitute.For<IMapper>();
         public NumberTests( ITestOutputHelper testOutput)
         {
             
             _fizzBuzzService = new FizzBuzzService(_inputService);
             _testOutput = testOutput;
-            _sut = new FooBarQixService(_inputService, _dataRepository,_cacheService);
+            _sut = new FooBarQixService(_inputService, _dataRepository,_cacheService, _mapper);
         }
         
         [Theory]

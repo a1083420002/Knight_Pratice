@@ -108,5 +108,10 @@ namespace Knight_Pratice.Services
             };
             return result;
         }
+
+        public DataEntity GetDataEntity(int input)
+        {
+            return new DataEntity() { Id = 1,Input = "1",Result = "1"};
+        }
     }
 }
