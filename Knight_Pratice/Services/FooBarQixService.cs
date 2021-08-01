@@ -236,13 +236,11 @@ namespace Knight_Pratice.Services
         public DataEntity GetDataEntity(int input)
         {
             var querySingleResult = _dataRepository.GetAll<Data>().FirstOrDefault(n => n.Data_Input == input.ToString());
-            //// 先在資料庫初步查詢是否有對應資料
             if (querySingleResult != default)
             {
                 var entity = _mapper.Map<DataEntity>(querySingleResult);
                 return entity;
             }
-            //// 若沒有對應資料，則在以下做商業邏輯處理
             int value = _inputService.GetValue(input);
             var result = new DataEntity
             {
@@ -292,13 +290,9 @@ namespace Knight_Pratice.Services
             result.Result = output == "" ? numStr : output;
 
             var createData = new Data { Data_Input = result.Input, Data_Result = result.Result.ToString() };
-            //// 將以上商業邏輯處理後的資料寫入資料庫
+
             _dataRepository.Create<Data>(createData);
-            //// 將資料庫寫入的資料再撈取出來做 Mapping
-            var createDataModel = _dataRepository.GetAll<Data>()
-                .FirstOrDefault(o => o.Data_Input == createData.Data_Input);
-            var createEntity = _mapper.Map<DataEntity>(createDataModel);
-            return createEntity;
+            return result;
 
         }
 
